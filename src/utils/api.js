@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const TMDB_TOKEN =
@@ -17,6 +18,7 @@ export const fecthDataFromApi = async (url, params) => {
     });
     return data;
   } catch (error) {
+    toast.error("Something went wrong!");
     console.log(error.message);
     return error;
   }

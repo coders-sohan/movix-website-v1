@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useFetch from "../../../../hooks/useFetch";
 import { DynamicImg } from "../../../LazyLoadImage/DynamicImg";
 import ContentWrapper from "../../../ContentWrapper/ContentWrapper";
+import toast from "react-hot-toast";
 import "./style.scss";
 
 const HeroBanner = () => {
@@ -11,7 +12,10 @@ const HeroBanner = () => {
   const navigate = useNavigate();
 
   const { data, loading, error } = useFetch("/movie/upcoming");
-  console.log(data, loading, error);
+
+  if (error) {
+    toast.error("Something went wrong!");
+  }
 
   // set background image
   useEffect(() => {
@@ -22,7 +26,7 @@ const HeroBanner = () => {
     }
   }, [data]);
 
-  console.log(background);
+  // console.log(background);
 
   const handleSearchQuery = (e, isButtonClick = false) => {
     e.preventDefault();
@@ -42,10 +46,10 @@ const HeroBanner = () => {
         <div className="opacity-layer"></div>
         <ContentWrapper>
           <div className="heroBannerContent">
-            <span className="title">Welcome.</span>
-            <span className="subTitle">
+            <h1 className="title">Welcome.</h1>
+            <h4 className="subTitle">
               Millions of movies, TV shows and people to discover. Explore now.
-            </span>
+            </h4>
             <div className="searchInput">
               <input
                 type="text"
