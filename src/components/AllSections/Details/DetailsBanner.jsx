@@ -1,0 +1,184 @@
+import React from "react";
+import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
+import dayjs from "dayjs";
+import useFetch from "../../../hooks/useFetch";
+import ContentWrapper from "../../ContentWrapper/ContentWrapper";
+import { DynamicImg } from "../../LazyLoadImage/DynamicImg";
+import Genres from "../../Shared/Carousel/Genres";
+import CircleRating from "../../Shared/Carousel/CircleRating";
+import { PlayIcon } from "./PlayIcon";
+import PosterFallBack from "../../../assets/images/no-poster.png";
+
+const DetailsBanner = ({
+  videosData,
+  videosLoading,
+  crewData,
+  castData,
+  creditsLoading,
+}) => {
+  const { mediaType, id } = useParams();
+
+  const { data, loading } = useFetch(`/${mediaType}/${id}`);
+
+  const _genres = data?.genres?.map((genre) => genre.id);
+
+  console.log("videos data", videosData, videosLoading);
+  console.log("crew data", crewData, creditsLoading);
+  console.log("cast data", castData, creditsLoading);
+
+  const director = crewData?.filter((member) => member.job === "Director");
+  const writer = crewData?.filter(
+    (member) =>
+      member.job === "Writer" ||
+      member.job === "Screenplay" ||
+      member.known_for_department === "Writing"
+  );
+  const created_by = data?.created_by?.map((member) => member.name);
+
+  console.log("director", director);
+  console.log("writer", writer);
+  console.log("created_by", created_by);
+
+  const toHoursAndMinutes = (totalMinutes) => {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours}h${minutes > 0 ? ` ${minutes}m` : ""}`;
+  };
+
+  return (
+    <div className="detailsBanner">
+      {!loading ? (
+        <>
+          {!!data && (
+            <React.Fragment>
+              <div className="backdrop-img">
+                <DynamicImg
+                  src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
+                  alt={data.title || data.name}
+                />
+                <div className="opacity-layer"></div>
+              </div>
+              <ContentWrapper>
+                <div className="content">
+                  <div className="left">
+                    {data?.poster_path ? (
+                      <DynamicImg
+                        src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+                        alt={data.title || data.name}
+                        className={"posterImg"}
+                      />
+                    ) : (
+                      <DynamicImg
+                        src={PosterFallBack}
+                        alt={"No poster image found"}
+                        className={"posterImg"}
+                      />
+                    )}
+                  </div>
+                  <div className="right">
+                    <h1 className="title">
+                      {`${
+                        data?.title ||
+                        data?.name ||
+                        data?.original_title ||
+                        data?.original_name
+                      } (${dayjs(data?.release_date).format("YYYY")})` ||
+                        "No title found"}
+                    </h1>
+                    <span className="subtitle">
+                      {data?.tagline || "No overview found for this movie"}
+                    </span>
+                    <Genres genresData={_genres} />
+                    <div className="row">
+                      <CircleRating rating={data?.vote_average} />
+                      <div className="playbtn" onClick={() => {}}>
+                        <PlayIcon />
+                        <h4 className="text">Watch Trailer</h4>
+                      </div>
+                    </div>
+                    <div className="overview">
+                      <h3 className="heading">Overview</h3>
+                      <p className="description">{data?.overview}</p>
+                    </div>
+                    <div className="info">
+                      {data?.status && (
+                        <div className="infoItem">
+                          <span className="text bold">Status : </span>
+                          <span className="text">{data?.status}</span>
+                        </div>
+                      )}
+                      {data?.release_date && (
+                        <div className="infoItem">
+                          <span className="text bold">Release Date : </span>
+                          <span className="text">
+                            {dayjs(data?.release_date).format("MMM DD, YYYY")}
+                          </span>
+                        </div>
+                      )}
+                      {data?.runtime && (
+                        <div className="infoItem">
+                          <span className="text bold">Runtime : </span>
+                          <span className="text">
+                            {toHoursAndMinutes(data?.runtime)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    {director?.length > 0 && (
+                      <div className="info">
+                        <span className="text bold">Director : </span>
+                        <span className="text">
+                          {director?.map((member) => member.name).join(", ")}
+                        </span>
+                      </div>
+                    )}
+                    {writer?.length > 0 && (
+                      <div className="info">
+                        <span className="text bold">Writer : </span>
+                        <span className="text">
+                          {writer?.map((member) => member.name).join(", ")}
+                        </span>
+                      </div>
+                    )}
+                    {created_by?.length > 0 && (
+                      <div className="info">
+                        <span className="text bold">Created By : </span>
+                        <span className="text">{created_by?.join(", ")}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </ContentWrapper>
+            </React.Fragment>
+          )}
+        </>
+      ) : (
+        <div className="detailsBannerSkeleton">
+          <ContentWrapper>
+            <div className="left skeleton"></div>
+            <div className="right">
+              <div className="row skeleton"></div>
+              <div className="row skeleton"></div>
+              <div className="row skeleton"></div>
+              <div className="row skeleton"></div>
+              <div className="row skeleton"></div>
+              <div className="row skeleton"></div>
+              <div className="row skeleton"></div>
+            </div>
+          </ContentWrapper>
+        </div>
+      )}
+    </div>
+  );
+};
+
+DetailsBanner.propTypes = {
+  videosData: PropTypes.array,
+  videosLoading: PropTypes.bool,
+  crewData: PropTypes.array,
+  castData: PropTypes.array,
+  creditsLoading: PropTypes.bool,
+};
+
+export default DetailsBanner;
