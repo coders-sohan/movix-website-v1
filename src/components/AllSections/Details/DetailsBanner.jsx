@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
@@ -8,6 +8,7 @@ import { DynamicImg } from "../../LazyLoadImage/DynamicImg";
 import Genres from "../../Shared/Carousel/Genres";
 import CircleRating from "../../Shared/Carousel/CircleRating";
 import { PlayIcon } from "./PlayIcon";
+import VideoPopup from "./VideoPopUp";
 import PosterFallBack from "../../../assets/images/no-poster.png";
 
 const DetailsBanner = ({
@@ -17,15 +18,31 @@ const DetailsBanner = ({
   castData,
   creditsLoading,
 }) => {
+  const [show, setShow] = useState(false);
+  const [videoId, setVideoId] = useState(null);
+
   const { mediaType, id } = useParams();
 
   const { data, loading } = useFetch(`/${mediaType}/${id}`);
 
+  console.log(data);
+
   const _genres = data?.genres?.map((genre) => genre.id);
 
-  console.log("videos data", videosData, videosLoading);
-  console.log("crew data", crewData, creditsLoading);
-  console.log("cast data", castData, creditsLoading);
+  const trailerVideo = () => {
+    const officialTrailerOrTeaser = videosData?.find(
+      (video) =>
+        video.official === true &&
+        !video.name.toLowerCase().includes("dubbed") &&
+        (video.name.toLowerCase().includes("trailer") ||
+          video.name.toLowerCase().includes("teaser"))
+    );
+    console.log("officialTrailerOrTeaser", officialTrailerOrTeaser);
+    if (officialTrailerOrTeaser) {
+      setShow(true);
+      setVideoId(officialTrailerOrTeaser.key);
+    }
+  };
 
   const director = crewData?.filter((member) => member.job === "Director");
   const writer = crewData?.filter(
@@ -35,10 +52,6 @@ const DetailsBanner = ({
       member.known_for_department === "Writing"
   );
   const created_by = data?.created_by?.map((member) => member.name);
-
-  console.log("director", director);
-  console.log("writer", writer);
-  console.log("created_by", created_by);
 
   const toHoursAndMinutes = (totalMinutes) => {
     const hours = Math.floor(totalMinutes / 60);
@@ -92,7 +105,7 @@ const DetailsBanner = ({
                     <Genres genresData={_genres} />
                     <div className="row">
                       <CircleRating rating={data?.vote_average} />
-                      <div className="playbtn" onClick={() => {}}>
+                      <div className="playbtn" onClick={trailerVideo}>
                         <PlayIcon />
                         <h4 className="text">Watch Trailer</h4>
                       </div>
@@ -102,6 +115,26 @@ const DetailsBanner = ({
                       <p className="description">{data?.overview}</p>
                     </div>
                     <div className="info">
+                      {data?.first_air_date && (
+                        <div className="infoItem">
+                          <span className="text bold">
+                            First episode published :{" "}
+                          </span>
+                          <span className="text">
+                            {dayjs(data?.first_air_date).format("DD MMM YYYY")}
+                          </span>
+                        </div>
+                      )}
+                      {data?.last_air_date && (
+                        <div className="infoItem">
+                          <span className="text bold">
+                            Last episode published :{" "}
+                          </span>
+                          <span className="text">
+                            {dayjs(data?.last_air_date).format("DD MMM YYYY")}
+                          </span>
+                        </div>
+                      )}
                       {data?.status && (
                         <div className="infoItem">
                           <span className="text bold">Status : </span>
@@ -149,6 +182,12 @@ const DetailsBanner = ({
                     )}
                   </div>
                 </div>
+                <VideoPopup
+                  show={show}
+                  setShow={setShow}
+                  videoId={videoId}
+                  setVideoId={setVideoId}
+                />
               </ContentWrapper>
             </React.Fragment>
           )}
