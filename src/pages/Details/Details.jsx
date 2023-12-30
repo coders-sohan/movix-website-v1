@@ -1,7 +1,14 @@
+import ContentWrapper from "../../components/ContentWrapper/ContentWrapper";
 import "./style.scss";
 
 const Details = () => {
-  return <div>Details</div>;
+  return (
+    <>
+      <div>
+        <ContentWrapper>Details page</ContentWrapper>
+      </div>
+    </>
+  );
 };
 
 export default Details;
