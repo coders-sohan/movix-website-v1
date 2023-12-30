@@ -63,7 +63,11 @@ const Carousel = ({ secData, loading }) => {
                   : PosterFallBack;
 
                 return (
-                  <div key={item.id} className="carouselItem">
+                  <div
+                    key={item.id}
+                    className="carouselItem"
+                    onClick={() => navigate(`/${item.media_type}/${item.id}`)}
+                  >
                     <div className="posterBlock">
                       <DynamicImg src={posterPath} />
                       <CircleRating rating={item.vote_average} />

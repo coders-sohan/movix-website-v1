@@ -4,14 +4,17 @@ import "react-circular-progressbar/dist/styles.css";
 import "./style.scss";
 
 const CircleRating = ({ rating }) => {
+  const roundedRating = Number(rating.toFixed(1));
+
   return (
     <div className="circleRating">
       <CircularProgressbar
         value={rating}
         maxValue={10}
-        text={rating}
+        text={roundedRating}
         styles={buildStyles({
-          pathColor: rating < 5 ? "red" : rating < 7 ? "orange" : "green",
+          pathColor:
+            rating < 5 ? "#eb3b5a" : rating < 7 ? "#faa307" : "#00ab36",
         })}
       />
     </div>
