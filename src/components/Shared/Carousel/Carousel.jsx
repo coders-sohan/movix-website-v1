@@ -11,7 +11,7 @@ import CircleRating from "./CircleRating";
 import Genres from "./Genres";
 import "./style.scss";
 
-const Carousel = ({ secData, loading }) => {
+const Carousel = ({ secData, loading, endpoint }) => {
   const carouselContainer = useRef();
   const { data } = useSelector((state) => state.home);
   console.log(data);
@@ -66,7 +66,9 @@ const Carousel = ({ secData, loading }) => {
                   <div
                     key={item.id}
                     className="carouselItem"
-                    onClick={() => navigate(`/${item.media_type}/${item.id}`)}
+                    onClick={() =>
+                      navigate(`/${item.media_type || endpoint}/${item.id}`)
+                    }
                   >
                     <div className="posterBlock">
                       <DynamicImg src={posterPath} />
@@ -105,6 +107,7 @@ const Carousel = ({ secData, loading }) => {
 Carousel.propTypes = {
   secData: PropTypes.array,
   loading: PropTypes.bool,
+  endpoint: PropTypes.string,
 };
 
 export default Carousel;
