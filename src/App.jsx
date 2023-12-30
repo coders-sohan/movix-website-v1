@@ -3,7 +3,10 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/routes.jsx";
 import { fecthDataFromApi } from "./utils/api";
 import { useDispatch } from "react-redux";
-import { getApiConfigurations } from "./store/features/home/homeSlice.js";
+import {
+  getApiConfigurations,
+  getGenres,
+} from "./store/features/home/homeSlice.js";
 import "./App.css";
 
 function App() {
@@ -15,9 +18,29 @@ function App() {
     });
   }, [dispatch]); // include dependencies here
 
+  const genresCall = useCallback(async () => {
+    let promises = [];
+    let endPoints = ["movie", "tv"];
+    let allGenres = {};
+
+    endPoints.forEach((endPoint) => {
+      promises.push(fecthDataFromApi(`/genre/${endPoint}/list`));
+    });
+
+    const data = await Promise.all(promises);
+    data.map(({ genres }) => {
+      return genres.map((item) => (allGenres[item.id] = item));
+    });
+
+    dispatch(getGenres(allGenres));
+
+    console.log(allGenres);
+  }, [dispatch]); // include dependencies here
+
   useEffect(() => {
     fetchApiConfig();
-  }, [fetchApiConfig]); // include fetchApiConfig in the dependency array
+    genresCall();
+  }, [fetchApiConfig, genresCall]); // genresCall is now memoized and won't change on every render
 
   return (
     <>
