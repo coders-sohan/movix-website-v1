@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useFetch from "../../../hooks/useFetch";
-import { DynamicImg } from "../../LazyLoadImage/DynamicImg";
-import ContentWrapper from "../../ContentWrapper/ContentWrapper";
+import useFetch from "../../../../hooks/useFetch";
+import { DynamicImg } from "../../../LazyLoadImage/DynamicImg";
+import ContentWrapper from "../../../ContentWrapper/ContentWrapper";
 import "./style.scss";
 
 const HeroBanner = () => {

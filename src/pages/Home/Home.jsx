@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import HeroBanner from "../../components/AllSections/Home/HeroBanner";
+import HeroBanner from "../../components/AllSections/Home/HeroBanner/HeroBanner";
 
 const Home = () => {
   return (
