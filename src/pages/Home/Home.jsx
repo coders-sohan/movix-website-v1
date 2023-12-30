@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet";
 import HeroBanner from "../../components/AllSections/Home/HeroBanner/HeroBanner";
+import TrandingSec from "../../components/AllSections/Home/TrandingSec/TrandingSec";
 
 const Home = () => {
   return (
@@ -9,6 +10,7 @@ const Home = () => {
       </Helmet>
       <div className="homePage">
         <HeroBanner />
+        <TrandingSec />
       </div>
     </>
   );
