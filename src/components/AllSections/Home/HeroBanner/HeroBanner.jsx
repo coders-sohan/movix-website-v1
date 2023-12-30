@@ -26,8 +26,6 @@ const HeroBanner = () => {
     }
   }, [data]);
 
-  // console.log(background);
-
   const handleSearchQuery = (e, isButtonClick = false) => {
     e.preventDefault();
     if ((e.key === "Enter" || isButtonClick) && query.length > 0) {

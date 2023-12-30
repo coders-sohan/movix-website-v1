@@ -220,3 +220,19 @@
     stroke: transparent;
   }
 }
+
+.genres {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: flex-end;
+  gap: 5px;
+
+  .genre {
+    font-size: 10px;
+    padding: 3px 5px;
+    border-radius: 5px;
+    background-color: var(--pink);
+    color: var(--white);
+    white-space: nowrap;
+  }
+}

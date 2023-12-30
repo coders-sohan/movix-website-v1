@@ -18,8 +18,7 @@ export const fecthDataFromApi = async (url, params) => {
     });
     return data;
   } catch (error) {
-    toast.error("Something went wrong!");
-    console.log(error.message);
+    toast.error(error.message);
     return error;
   }
 };

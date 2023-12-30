@@ -33,8 +33,6 @@ function App() {
     });
 
     dispatch(getGenres(allGenres));
-
-    console.log(allGenres);
   }, [dispatch]); // include dependencies here
 
   useEffect(() => {

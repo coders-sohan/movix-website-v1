@@ -7,8 +7,9 @@ import dayjs from "dayjs";
 import { DynamicImg } from "../../LazyLoadImage/DynamicImg";
 import PosterFallBack from "../../../assets/images/no-poster.png";
 import ContentWrapper from "../../ContentWrapper/ContentWrapper";
-import "./style.scss";
 import CircleRating from "./CircleRating";
+import Genres from "./Genres";
+import "./style.scss";
 
 const Carousel = ({ secData, loading }) => {
   const carouselContainer = useRef();
@@ -16,7 +17,19 @@ const Carousel = ({ secData, loading }) => {
   console.log(data);
   const navigate = useNavigate();
 
-  const navigation = (direction) => {};
+  const navigation = (dir) => {
+    const container = carouselContainer.current;
+
+    const scrollAmount =
+      dir === "left"
+        ? container.scrollLeft - (container.offsetWidth + 20)
+        : container.scrollLeft + (container.offsetWidth + 20);
+
+    container.scrollTo({
+      left: scrollAmount,
+      behavior: "smooth",
+    });
+  };
 
   const skeletonItem = () => {
     return (
@@ -43,7 +56,7 @@ const Carousel = ({ secData, loading }) => {
             onClick={() => navigation("right")}
           />
           {!loading ? (
-            <div className="carouselItems">
+            <div className="carouselItems" ref={carouselContainer}>
               {secData?.map((item) => {
                 const posterPath = item.poster_path
                   ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
@@ -54,6 +67,7 @@ const Carousel = ({ secData, loading }) => {
                     <div className="posterBlock">
                       <DynamicImg src={posterPath} />
                       <CircleRating rating={item.vote_average} />
+                      <Genres genresData={item.genre_ids.slice(0, 2)} />
                     </div>
                     <div className="textBlock">
                       <h3 className="title">
