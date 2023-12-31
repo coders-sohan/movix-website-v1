@@ -22,7 +22,25 @@ const DetailsBanner = ({ videosData, crewData }) => {
   const _genres = data?.genres?.map((genre) => genre.id);
 
   const trailerVideo = () => {
-    const officialTrailerOrTeaser = videosData?.find((video) => {
+    const sortedVideosData = videosData?.sort((a, b) => {
+      let aName = a?.name.toLowerCase();
+      let bName = b?.name.toLowerCase();
+
+      if (aName.includes("trailer")) return -1;
+      if (bName.includes("trailer")) return 1;
+      if (aName.includes("teaser")) return -1;
+      if (bName.includes("teaser")) return 1;
+      if (aName.includes("official trailer")) return -1;
+      if (bName.includes("official trailer")) return 1;
+      if (aName.includes("official")) return -1;
+      if (bName.includes("official")) return 1;
+      if (aName.includes("promo")) return -1;
+      if (bName.includes("promo")) return 1;
+
+      return 0;
+    });
+
+    const officialTrailerOrTeaser = sortedVideosData?.find((video) => {
       let videoName = video?.name.toLowerCase();
       let videoType = video?.type.toLowerCase();
 
@@ -30,21 +48,21 @@ const DetailsBanner = ({ videosData, crewData }) => {
         (video.official === true || !video.official) &&
         !videoName.includes("dubbed") &&
         !videoName.includes("hindi") &&
-        (videosData.length < 2
+        (sortedVideosData.length < 2
           ? videoType.includes("trailer") || videoType.includes("teaser")
-          : videoName.includes("official")
-          ? true
-          : videoName.includes("official trailer")
-          ? true
-          : videoName.includes("trailer")
-          ? true
-          : videoName.includes("teaser")
-          ? true
-          : videoName.includes("promo"))
+          : videoName.includes("trailer") ||
+            videoName.includes("teaser") ||
+            videoName.includes("official trailer") ||
+            videoName.includes("official") ||
+            videoName.includes("promo"))
       );
     });
 
-    console.log("officialTrailerOrTeaser", officialTrailerOrTeaser, videosData);
+    console.log(
+      "officialTrailerOrTeaser",
+      officialTrailerOrTeaser,
+      sortedVideosData
+    );
 
     if (officialTrailerOrTeaser) {
       setShow(true);
