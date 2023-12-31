@@ -24,11 +24,11 @@ const Card = ({ item, endpoint, fromSearch, fromExplore }) => {
       <div className="posterBlock">
         <DynamicImg src={posterPath} />
         {fromSearch || fromExplore ? (
-          <Genres genresData={item.genre_ids.slice(0, 3)} />
+          <Genres genresData={item?.genre_ids.slice(0, 3)} />
         ) : (
           <>
             <CircleRating rating={item.vote_average} />
-            <Genres genresData={item.genre_ids.slice(0, 2)} />
+            <Genres genresData={item?.genre_ids.slice(0, 2)} />
           </>
         )}
       </div>
