@@ -47,7 +47,7 @@ const Carousel = ({ secData, loading, endpoint }) => {
     <>
       <div className="carousel">
         <ContentWrapper>
-          {!loading && secData.length > 0 && (
+          {!loading && secData?.length > 0 && (
             <>
               <BsArrowLeftCircleFill
                 className="carouselLeftNav arrow"
@@ -59,7 +59,7 @@ const Carousel = ({ secData, loading, endpoint }) => {
               />
             </>
           )}
-          {!loading && secData.length > 0 ? (
+          {!loading && secData?.length > 0 ? (
             <div className="carouselItems" ref={carouselContainer}>
               {secData?.map((item) => {
                 const posterPath = item.poster_path
