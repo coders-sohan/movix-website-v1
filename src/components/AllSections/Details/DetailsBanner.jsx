@@ -19,24 +19,33 @@ const DetailsBanner = ({ videosData, crewData }) => {
 
   const { data, loading } = useFetch(`/${mediaType}/${id}`);
 
-  console.log(data);
-
   const _genres = data?.genres?.map((genre) => genre.id);
 
   const trailerVideo = () => {
-    const officialTrailerOrTeaser = videosData?.find(
-      (video) =>
+    const officialTrailerOrTeaser = videosData?.find((video) => {
+      let videoName = video?.name.toLowerCase();
+      let videoType = video?.type.toLowerCase();
+
+      return (
         (video.official === true || !video.official) &&
-        !video.name.toLowerCase().includes("dubbed") &&
-        !video.name.toLowerCase().includes("hindi") &&
+        !videoName.includes("dubbed") &&
+        !videoName.includes("hindi") &&
         (videosData.length < 2
-          ? video?.type.toLowerCase().includes("trailer") ||
-            video?.type.toLowerCase().includes("teaser")
-          : video?.name.toLowerCase().includes("official") ||
-            video?.name.toLowerCase().includes("trailer") ||
-            video?.name.toLowerCase().includes("teaser") ||
-            video?.name.toLowerCase().includes("promo"))
-    );
+          ? videoType.includes("trailer") || videoType.includes("teaser")
+          : videoName.includes("official")
+          ? true
+          : videoName.includes("official trailer")
+          ? true
+          : videoName.includes("trailer")
+          ? true
+          : videoName.includes("teaser")
+          ? true
+          : videoName.includes("promo"))
+      );
+    });
+
+    console.log("officialTrailerOrTeaser", officialTrailerOrTeaser, videosData);
+
     if (officialTrailerOrTeaser) {
       setShow(true);
       setVideoId(officialTrailerOrTeaser.key);
