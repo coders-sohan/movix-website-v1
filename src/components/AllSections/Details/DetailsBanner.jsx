@@ -58,12 +58,6 @@ const DetailsBanner = ({ videosData, crewData }) => {
       );
     });
 
-    console.log(
-      "officialTrailerOrTeaser",
-      officialTrailerOrTeaser,
-      sortedVideosData
-    );
-
     if (officialTrailerOrTeaser) {
       setShow(true);
       setVideoId(officialTrailerOrTeaser.key);
@@ -130,7 +124,9 @@ const DetailsBanner = ({ videosData, crewData }) => {
                     </span>
                     <Genres genresData={_genres} />
                     <div className="row">
-                      <CircleRating rating={data?.vote_average} />
+                      {data?.vote_average > 0 && (
+                        <CircleRating rating={data?.vote_average} />
+                      )}
                       {(videosData?.length > 0 || videoId !== null) && (
                         <div className="playbtn" onClick={trailerVideo}>
                           <PlayIcon />
@@ -138,10 +134,12 @@ const DetailsBanner = ({ videosData, crewData }) => {
                         </div>
                       )}
                     </div>
-                    <div className="overview">
-                      <h3 className="heading">Overview</h3>
-                      <p className="description">{data?.overview}</p>
-                    </div>
+                    {data?.overview && (
+                      <div className="overview">
+                        <h3 className="heading">Overview</h3>
+                        <p className="description">{data?.overview}</p>
+                      </div>
+                    )}
                     <div className="info">
                       {data?.first_air_date && (
                         <div className="infoItem">
