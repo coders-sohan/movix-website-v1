@@ -27,7 +27,7 @@ const Cast = ({ secData, loading }) => {
             {skeleton()}
           </div>
         ) : secData?.length === 0 ? (
-          <p>No cast data is found...</p>
+          <p className="notFound">No cast data is found...</p>
         ) : (
           <div className="listItems">
             {secData?.map((item) => {

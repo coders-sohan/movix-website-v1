@@ -31,7 +31,7 @@ const Videos = ({ secData, loading }) => {
             {loadingSkeleton()}
           </div>
         ) : secData?.length === 0 ? (
-          <p>No official videos data is found...</p>
+          <p className="notFound">No official videos data is found...</p>
         ) : (
           <div className="videos">
             {secData?.map((video) => {

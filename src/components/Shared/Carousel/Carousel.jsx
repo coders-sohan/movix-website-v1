@@ -56,37 +56,6 @@ const Carousel = ({ secData, loading, endpoint }) => {
           {!loading && secData?.length > 0 ? (
             <div className="carouselItems" ref={carouselContainer}>
               {secData?.map((item) => {
-                // const posterPath = item.poster_path
-                //   ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
-                //   : PosterFallBack;
-
-                // return (
-                //   <div
-                //     key={item.id}
-                //     className="carouselItem"
-                //     onClick={() =>
-                //       navigate(
-                //         `/details/${item.media_type || endpoint}/${item.id}`
-                //       )
-                //     }
-                //   >
-                //     <div className="posterBlock">
-                //       <DynamicImg src={posterPath} />
-                //       <CircleRating rating={item.vote_average} />
-                //       <Genres genresData={item.genre_ids.slice(0, 2)} />
-                //     </div>
-                //     <div className="textBlock">
-                //       <h3 className="title">
-                //         {item.title || item.name || item.original_name}
-                //       </h3>
-                //       <span className="date">
-                //         {dayjs(item.release_date || item.first_air_date).format(
-                //           "MMM DD, YYYY"
-                //         )}
-                //       </span>
-                //     </div>
-                //   </div>
-                // );
                 return <Card key={item.id} item={item} endpoint={endpoint} />;
               })}
             </div>
@@ -100,7 +69,7 @@ const Carousel = ({ secData, loading, endpoint }) => {
             </div>
           ) : (
             <div>
-              <span className="text">No data found</span>
+              <span className="notFound">No data found</span>
             </div>
           )}
         </ContentWrapper>
