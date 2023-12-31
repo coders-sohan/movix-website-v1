@@ -67,9 +67,6 @@ const Navbar = () => {
     if (type === "tv-shows") {
       navigate("/explore/tv");
     }
-    if (type === "dramas") {
-      navigate("/explore/drama");
-    }
     setMobileMenu(false);
   };
 
@@ -83,11 +80,6 @@ const Navbar = () => {
       id: 2,
       name: "TV Shows",
       level: "tv-shows",
-    },
-    {
-      id: 3,
-      name: "Dramas",
-      level: "dramas",
     },
   ];
 
