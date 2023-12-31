@@ -6,7 +6,7 @@ import CircleRating from "../Carousel/CircleRating";
 import Genres from "../Carousel/Genres";
 import PosterFallBack from "../../../assets/images/no-poster.png";
 
-const Card = ({ item, endpoint }) => {
+const Card = ({ item, endpoint, fromSearch }) => {
   const navigate = useNavigate();
 
   const posterPath = item.poster_path
@@ -16,15 +16,21 @@ const Card = ({ item, endpoint }) => {
   return (
     <div
       key={item.id}
-      className="carouselItem"
+      className={fromSearch ? "movieCard" : "carouselItem"}
       onClick={() =>
         navigate(`/details/${item.media_type || endpoint}/${item.id}`)
       }
     >
       <div className="posterBlock">
         <DynamicImg src={posterPath} />
-        <CircleRating rating={item.vote_average} />
-        <Genres genresData={item.genre_ids.slice(0, 2)} />
+        {fromSearch ? (
+          <Genres genresData={item.genre_ids.slice(0, 3)} />
+        ) : (
+          <>
+            <CircleRating rating={item.vote_average} />
+            <Genres genresData={item.genre_ids.slice(0, 2)} />
+          </>
+        )}
       </div>
       <div className="textBlock">
         <h3 className="title">
@@ -43,6 +49,7 @@ const Card = ({ item, endpoint }) => {
 Card.propTypes = {
   item: PropTypes.object,
   endpoint: PropTypes.string,
+  fromSearch: PropTypes.bool,
 };
 
 export default Card;
