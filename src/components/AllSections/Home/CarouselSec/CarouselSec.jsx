@@ -36,7 +36,9 @@ const CarouselSec = ({ title, endpointType, switchTabsData, fetchUrl }) => {
       <div className="carouselSection">
         <ContentWrapper>
           <h4 className="carouselTitle">{title}</h4>
-          <SwitchTabs data={switchTabsData} onChangeTab={onChangeTab} />
+          {switchTabsData && (
+            <SwitchTabs data={switchTabsData} onChangeTab={onChangeTab} />
+          )}
         </ContentWrapper>
         <Carousel
           secData={data?.results}
