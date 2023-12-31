@@ -4,7 +4,7 @@ import "react-circular-progressbar/dist/styles.css";
 import "./style.scss";
 
 const CircleRating = ({ rating }) => {
-  const roundedRating = Number(rating.toFixed(1));
+  const roundedRating = Number(rating?.toFixed(1));
 
   return (
     <div className="circleRating">
