@@ -105,7 +105,7 @@ const Carousel = ({ secData, loading, endpoint }) => {
             </div>
           ) : (
             <div>
-              <h3 className="text">No data found</h3>
+              <span className="text">No data found</span>
             </div>
           )}
         </ContentWrapper>
