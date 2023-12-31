@@ -1,21 +1,15 @@
 import { useRef } from "react";
 import PropTypes from "prop-types";
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import dayjs from "dayjs";
-import { DynamicImg } from "../../LazyLoadImage/DynamicImg";
-import PosterFallBack from "../../../assets/images/no-poster.png";
 import ContentWrapper from "../../ContentWrapper/ContentWrapper";
-import CircleRating from "./CircleRating";
-import Genres from "./Genres";
 import "./style.scss";
+import Card from "../Card/Card";
 
 const Carousel = ({ secData, loading, endpoint }) => {
   const carouselContainer = useRef();
   const { data } = useSelector((state) => state.home);
   console.log(data);
-  const navigate = useNavigate();
 
   const navigation = (dir) => {
     const container = carouselContainer.current;
@@ -62,37 +56,38 @@ const Carousel = ({ secData, loading, endpoint }) => {
           {!loading && secData?.length > 0 ? (
             <div className="carouselItems" ref={carouselContainer}>
               {secData?.map((item) => {
-                const posterPath = item.poster_path
-                  ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
-                  : PosterFallBack;
+                // const posterPath = item.poster_path
+                //   ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
+                //   : PosterFallBack;
 
-                return (
-                  <div
-                    key={item.id}
-                    className="carouselItem"
-                    onClick={() =>
-                      navigate(
-                        `/details/${item.media_type || endpoint}/${item.id}`
-                      )
-                    }
-                  >
-                    <div className="posterBlock">
-                      <DynamicImg src={posterPath} />
-                      <CircleRating rating={item.vote_average} />
-                      <Genres genresData={item.genre_ids.slice(0, 2)} />
-                    </div>
-                    <div className="textBlock">
-                      <h3 className="title">
-                        {item.title || item.name || item.original_name}
-                      </h3>
-                      <span className="date">
-                        {dayjs(item.release_date || item.first_air_date).format(
-                          "MMM DD, YYYY"
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                );
+                // return (
+                //   <div
+                //     key={item.id}
+                //     className="carouselItem"
+                //     onClick={() =>
+                //       navigate(
+                //         `/details/${item.media_type || endpoint}/${item.id}`
+                //       )
+                //     }
+                //   >
+                //     <div className="posterBlock">
+                //       <DynamicImg src={posterPath} />
+                //       <CircleRating rating={item.vote_average} />
+                //       <Genres genresData={item.genre_ids.slice(0, 2)} />
+                //     </div>
+                //     <div className="textBlock">
+                //       <h3 className="title">
+                //         {item.title || item.name || item.original_name}
+                //       </h3>
+                //       <span className="date">
+                //         {dayjs(item.release_date || item.first_air_date).format(
+                //           "MMM DD, YYYY"
+                //         )}
+                //       </span>
+                //     </div>
+                //   </div>
+                // );
+                return <Card key={item.id} item={item} endpoint={endpoint} />;
               })}
             </div>
           ) : loading ? (
