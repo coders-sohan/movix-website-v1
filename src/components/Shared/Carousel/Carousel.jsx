@@ -47,15 +47,19 @@ const Carousel = ({ secData, loading, endpoint }) => {
     <>
       <div className="carousel">
         <ContentWrapper>
-          <BsArrowLeftCircleFill
-            className="carouselLeftNav arrow"
-            onClick={() => navigation("left")}
-          />
-          <BsArrowRightCircleFill
-            className="carouselRightNav arrow"
-            onClick={() => navigation("right")}
-          />
-          {!loading ? (
+          {!loading && secData.length > 0 && (
+            <>
+              <BsArrowLeftCircleFill
+                className="carouselLeftNav arrow"
+                onClick={() => navigation("left")}
+              />
+              <BsArrowRightCircleFill
+                className="carouselRightNav arrow"
+                onClick={() => navigation("right")}
+              />
+            </>
+          )}
+          {!loading && secData.length > 0 ? (
             <div className="carouselItems" ref={carouselContainer}>
               {secData?.map((item) => {
                 const posterPath = item.poster_path
@@ -91,13 +95,17 @@ const Carousel = ({ secData, loading, endpoint }) => {
                 );
               })}
             </div>
-          ) : (
+          ) : loading ? (
             <div className="loadingSkeleton">
               {skeletonItem()}
               {skeletonItem()}
               {skeletonItem()}
               {skeletonItem()}
               {skeletonItem()}
+            </div>
+          ) : (
+            <div>
+              <h3 className="text">No data found</h3>
             </div>
           )}
         </ContentWrapper>

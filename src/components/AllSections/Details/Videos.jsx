@@ -23,7 +23,16 @@ const Videos = ({ secData, loading }) => {
     <div className="videosSection">
       <ContentWrapper>
         <h1 className="sectionHeading">Official Videos</h1>
-        {!loading ? (
+        {loading ? (
+          <div className="videoSkeleton">
+            {loadingSkeleton()}
+            {loadingSkeleton()}
+            {loadingSkeleton()}
+            {loadingSkeleton()}
+          </div>
+        ) : secData?.length === 0 ? (
+          <p>No official videos data is found...</p>
+        ) : (
           <div className="videos">
             {secData?.map((video) => {
               return (
@@ -46,13 +55,6 @@ const Videos = ({ secData, loading }) => {
                 </div>
               );
             })}
-          </div>
-        ) : (
-          <div className="videoSkeleton">
-            {loadingSkeleton()}
-            {loadingSkeleton()}
-            {loadingSkeleton()}
-            {loadingSkeleton()}
           </div>
         )}
       </ContentWrapper>

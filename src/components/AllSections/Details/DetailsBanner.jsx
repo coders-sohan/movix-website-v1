@@ -26,12 +26,17 @@ const DetailsBanner = ({ videosData, crewData }) => {
   const trailerVideo = () => {
     const officialTrailerOrTeaser = videosData?.find(
       (video) =>
-        video.official === true &&
+        (video.official === true || !video.official) &&
         !video.name.toLowerCase().includes("dubbed") &&
-        (video.name.toLowerCase().includes("trailer") ||
-          video.name.toLowerCase().includes("teaser"))
+        !video.name.toLowerCase().includes("hindi") &&
+        (videosData.length < 2
+          ? video?.type.toLowerCase().includes("trailer") ||
+            video?.type.toLowerCase().includes("teaser")
+          : video?.name.toLowerCase().includes("official") ||
+            video?.name.toLowerCase().includes("trailer") ||
+            video?.name.toLowerCase().includes("teaser") ||
+            video?.name.toLowerCase().includes("promo"))
     );
-    console.log("officialTrailerOrTeaser", officialTrailerOrTeaser);
     if (officialTrailerOrTeaser) {
       setShow(true);
       setVideoId(officialTrailerOrTeaser.key);
@@ -99,10 +104,12 @@ const DetailsBanner = ({ videosData, crewData }) => {
                     <Genres genresData={_genres} />
                     <div className="row">
                       <CircleRating rating={data?.vote_average} />
-                      <div className="playbtn" onClick={trailerVideo}>
-                        <PlayIcon />
-                        <h4 className="text">Watch Trailer</h4>
-                      </div>
+                      {(videosData?.length > 0 || videoId !== null) && (
+                        <div className="playbtn" onClick={trailerVideo}>
+                          <PlayIcon />
+                          <h4 className="text">Watch Trailer</h4>
+                        </div>
+                      )}
                     </div>
                     <div className="overview">
                       <h3 className="heading">Overview</h3>

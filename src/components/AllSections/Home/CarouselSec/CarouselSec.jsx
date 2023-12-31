@@ -21,7 +21,9 @@ const CarouselSec = ({ title, endpointType, switchTabsData, fetchUrl }) => {
   };
 
   const finalUrl =
-    endpoint === "movie" || endpoint === "tv"
+    fetchUrl.includes("tv") || fetchUrl.includes("movie")
+      ? fetchUrl
+      : endpoint === "movie" || endpoint === "tv"
       ? `/${endpoint + fetchUrl}`
       : `${fetchUrl + endpoint}`;
 

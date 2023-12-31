@@ -17,7 +17,18 @@ const Cast = ({ secData, loading }) => {
     <div className="castSection">
       <ContentWrapper>
         <h1 className="sectionHeading">Top Cast</h1>
-        {!loading ? (
+        {loading ? (
+          <div className="castSkeleton">
+            {skeleton()}
+            {skeleton()}
+            {skeleton()}
+            {skeleton()}
+            {skeleton()}
+            {skeleton()}
+          </div>
+        ) : secData?.length === 0 ? (
+          <p>No cast data is found...</p>
+        ) : (
           <div className="listItems">
             {secData?.map((item) => {
               return (
@@ -37,15 +48,6 @@ const Cast = ({ secData, loading }) => {
                 </div>
               );
             })}
-          </div>
-        ) : (
-          <div className="castSkeleton">
-            {skeleton()}
-            {skeleton()}
-            {skeleton()}
-            {skeleton()}
-            {skeleton()}
-            {skeleton()}
           </div>
         )}
       </ContentWrapper>
