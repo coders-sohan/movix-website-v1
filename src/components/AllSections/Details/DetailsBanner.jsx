@@ -11,13 +11,7 @@ import { PlayIcon } from "./PlayIcon";
 import VideoPopup from "./VideoPopUp";
 import PosterFallBack from "../../../assets/images/no-poster.png";
 
-const DetailsBanner = ({
-  videosData,
-  videosLoading,
-  crewData,
-  castData,
-  creditsLoading,
-}) => {
+const DetailsBanner = ({ videosData, crewData }) => {
   const [show, setShow] = useState(false);
   const [videoId, setVideoId] = useState(null);
 
@@ -70,8 +64,8 @@ const DetailsBanner = ({
                   src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
                   alt={data.title || data.name}
                 />
-                <div className="opacity-layer"></div>
               </div>
+              <div className="opacity-layer"></div>
               <ContentWrapper>
                 <div className="content">
                   <div className="left">
