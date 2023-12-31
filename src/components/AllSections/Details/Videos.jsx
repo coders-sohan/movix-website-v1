@@ -22,7 +22,7 @@ const Videos = ({ secData, loading }) => {
   return (
     <div className="videosSection">
       <ContentWrapper>
-        <div className="sectionHeading">Official Videos</div>
+        <h1 className="sectionHeading">Official Videos</h1>
         {!loading ? (
           <div className="videos">
             {secData?.map((video) => {

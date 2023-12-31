@@ -16,7 +16,7 @@ const Cast = ({ secData, loading }) => {
   return (
     <div className="castSection">
       <ContentWrapper>
-        <div className="sectionHeading">Top Cast</div>
+        <h1 className="sectionHeading">Top Cast</h1>
         {!loading ? (
           <div className="listItems">
             {secData?.map((item) => {
