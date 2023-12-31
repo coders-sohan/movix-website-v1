@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchDataFromApi } from "../../utils/api";
 import ContentWrapper from "../../components/ContentWrapper/ContentWrapper";
+import { DynamicImg } from "../../components/LazyLoadImage/DynamicImg";
 import Card from "../../components/Shared/Card/Card";
 import Spinner from "../../components/Spinner/Spinner";
 import noResults from "../../assets/images/no-results.png";
@@ -13,6 +14,7 @@ const SearchResult = () => {
   const [pageNum, setPageNum] = useState(1);
   const [loading, setLoading] = useState(false);
   const { query } = useParams();
+  const navigate = useNavigate();
 
   const fetchInitialData = useCallback(() => {
     setLoading(true);
@@ -76,8 +78,9 @@ const SearchResult = () => {
             </>
           ) : (
             <div className="resultNotFound">
-              <img src={noResults} alt="No Results" />
-              <p>No Results Found</p>
+              <DynamicImg src={noResults} alt="No Results" />
+              <p className="pageTitle">No Results Found</p>
+              <h3 onClick={() => navigate("/")}>Back to home</h3>
             </div>
           )}
         </ContentWrapper>

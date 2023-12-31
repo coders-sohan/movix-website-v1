@@ -3,10 +3,39 @@
 .searchResultsPage {
   min-height: 700px;
   padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   .resultNotFound {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     font-size: 24px;
-    color: var(--black-light);
+    color: var(--white);
+
+    h3 {
+      font-size: 14px;
+      text-decoration: underline;
+      cursor: pointer;
+      transition: all ease 0.3s;
+
+      &:hover {
+        color: var(--orange);
+      }
+
+      @include md {
+        font-size: 20px;
+      }
+    }
+
+    img {
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 20px;
+    }
   }
 
   .pageTitle {
