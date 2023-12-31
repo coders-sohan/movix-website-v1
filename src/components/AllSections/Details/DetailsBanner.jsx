@@ -120,7 +120,7 @@ const DetailsBanner = ({ videosData, crewData }) => {
                         "No title found"}
                     </h1>
                     <span className="subtitle">
-                      {data?.tagline || "No overview found for this movie"}
+                      {data?.tagline || "No tagline found for this movie"}
                     </span>
                     <Genres genresData={_genres} />
                     <div className="row">
