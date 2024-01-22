@@ -6,7 +6,7 @@ import CircleRating from "../Carousel/CircleRating";
 import Genres from "../Carousel/Genres";
 import PosterFallBack from "../../../assets/images/no-poster.png";
 
-const Card = ({ item, mediaType, fromSearch, fromExplore }) => {
+const Card = ({ item, endpoint, fromSearch, fromExplore }) => {
   const navigate = useNavigate();
 
   const posterPath = item.poster_path
@@ -18,7 +18,7 @@ const Card = ({ item, mediaType, fromSearch, fromExplore }) => {
       key={item.id}
       className={fromSearch || fromExplore ? "movieCard" : "carouselItem"}
       onClick={() =>
-        navigate(`/details/${item.media_type || mediaType}/${item.id}`)
+        navigate(`/details/${item.media_type || endpoint}/${item.id}`)
       }
     >
       <div className="posterBlock">
@@ -48,7 +48,7 @@ const Card = ({ item, mediaType, fromSearch, fromExplore }) => {
 
 Card.propTypes = {
   item: PropTypes.object,
-  mediaType: PropTypes.string,
+  endpoint: PropTypes.string,
   fromSearch: PropTypes.bool,
   fromExplore: PropTypes.bool,
 };

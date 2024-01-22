@@ -143,7 +143,7 @@ const Explore = () => {
                     <Card
                       key={index}
                       item={item}
-                      mediaType={mediaType}
+                      endpoint={mediaType}
                       fromExplore={true}
                     />
                   );
