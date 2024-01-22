@@ -1,15 +1,15 @@
 import { useRef } from "react";
 import PropTypes from "prop-types";
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import ContentWrapper from "../../ContentWrapper/ContentWrapper";
 import "./style.scss";
 import Card from "../Card/Card";
 
 const Carousel = ({ secData, loading, endpoint }) => {
   const carouselContainer = useRef();
-  const { data } = useSelector((state) => state.home);
-  console.log(data);
+  // const { data } = useSelector((state) => state.home);
+  // console.log(data);
 
   const navigation = (dir) => {
     const container = carouselContainer.current;

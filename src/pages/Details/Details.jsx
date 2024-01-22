@@ -34,8 +34,6 @@ const Details = () => {
     setMovieTitle(title);
   }, [data]);
 
-  console.log(movieTitle);
-
   return (
     <div>
       <Helmet>
